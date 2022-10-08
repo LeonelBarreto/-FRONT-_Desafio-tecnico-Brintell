@@ -2,7 +2,17 @@ import './styles.css';
 import Edit from '../../assets/edit.svg';
 import Delete from '../../assets/delete.svg';
 
-function TableBoard() {
+function TableBoard({students}) {
+
+    function formatCPF(cpf){
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
+
+    function formatPhone(number){
+        number  = number.replace(/[^\d]/g, "");
+        return number.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    }
+    
     return (
         <div className='container-table'>
             <div className='table-header'>
@@ -25,19 +35,27 @@ function TableBoard() {
                     <strong></strong>
                 </div>
             </div>
+
             <div className='table-body'>
-                <div className='table-line'>
-                    <span className='table-line-name'>Jane Doe</span>
-                    <span className='table-line-cpf'>123.456.789-00</span>
-                    <span className='table-line-gender'>F</span>
-                    <span className='table-line-email'>jane@email.com</span>
-                    <span className='table-line-phone'>99 99999-9999</span>
-                    <div className='table-line-icons'>
-                        <img src={Edit} alt="editar" />
-                        <img src={Delete} alt="deletar" />
-                    </div>
-                </div>
+
+                {
+                    students.map((student) => (
+                        <div className='table-line' key={student.id}>
+                            <span className='table-line-name'>{student.nome}</span>
+                            <span className='table-line-cpf'>{formatCPF(student.cpf)}</span>
+                            <span className='table-line-gender'>{student.sexo === "Masculino" ? "M" : "F"}</span>
+                            <span className='table-line-email'>{student.email}</span>
+                            <span className='table-line-phone'>{formatPhone(student.telefone)}</span>
+                            <div className='table-line-icons'>
+                                <img src={Edit} alt="editar" />
+                                <img src={Delete} alt="deletar" onClick={() => handleDeleteStudent(1)} />
+                            </div>
+                        </div>
+                    ))
+                }
             </div>
+
+            
         </div>
     )
 };

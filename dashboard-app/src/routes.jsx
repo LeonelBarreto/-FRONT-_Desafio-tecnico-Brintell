@@ -4,7 +4,7 @@ import Main from './pages/Home';
 function MainRoutes() {
     return (
         <Routes>
-            <Route path='/dashboard' element={<Main />} />
+            <Route path='/' element={<Main />} />
         </Routes>
     )
 }
